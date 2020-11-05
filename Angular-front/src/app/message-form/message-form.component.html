@@ -1,0 +1,48 @@
+<div *ngIf="this.svc.formShow">
+    <h2>Напишите нам</h2>
+    <form (ngSubmit)="onSubmited()" #userForm="ngForm"> 
+    <div class="entryField">
+        <label for="Name">Имя:</label>
+        <input type="text" id="Name" [(ngModel)]="this.svc.message.mssgName" name="Name" required #Name="ngModel">
+        <div class="alert" [hidden]="Name.valid || Name.pristine">Поле обязательно для заполнения</div>
+    </div>
+    <div class="entryField">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" [(ngModel)]="this.svc.message.mssgEmail" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"/>
+        <div class="alert" [hidden]="email.valid || email.pristine">Неверно введен Email</div>
+        
+    </div>
+
+    <div class="entryField">
+        <label for="tel">Телефон:</label>
+        <input type="tel" id="tel" name="tel" [(ngModel)]="this.svc.message.mssgTel" required pattern="[\8]\d{10}" #tel="ngModel">
+        <div class="alert" [hidden]="tel.valid || tel.pristine">Поле должно соответствовать формату (89093456790)</div>
+
+    </div>
+
+    <div class="entryField">
+        <label for="topic">Тема:</label>
+        <select id="topic" name="topic" [(ngModel)]="this.svc.message.mssgTopic" required #topic="ngModel">
+            <option value="1">Задание</option>
+            <option value="2">Новости</option>
+            <option value="3">Работа</option>
+            <option value="4">Учеба</option>
+        </select>
+        <div class="alert" [hidden]="topic.valid || topic.pristine">Поле обязательно для заполнения</div>
+
+    </div>
+
+    <div class="entryField">
+        <label for="message">Ваше сообщение:</label>
+        <input type="text" id="message" size="15" name="message" [(ngModel)]="this.svc.message.mssgText" required #text="ngModel">
+        <div class="alert" [hidden]="text.valid || text.pristine">Поле обязательно для заполнения</div>
+
+    </div>
+
+    <button type="submit" [disabled]="!userForm.form.valid" (click)="this.svc.postData()">Отправить письмо!</button>
+</form>
+</div>
+<div *ngIf="!this.svc.formShow">
+    <app-result [resultForm]="resultForm"></app-result>
+</div>
+
